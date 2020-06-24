@@ -1,0 +1,9 @@
+#root .bg-light{
+    background-color:#0f171e !important;
+}
+.navbar-brand img{
+    width:120px;
+}
+.nav-link {
+    color: #fff;
+}

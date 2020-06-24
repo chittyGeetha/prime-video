@@ -1,0 +1,25 @@
+#root .container-fluid {
+    position: relative;
+    top: 150px;
+    left: 50px;
+  }
+  #root .container-fluid .regLink {
+    margin-top: 80px;
+  }
+  #root .container-fluid h1 {
+    font-size: 50px;
+    font-style: normal;
+    text-transform: capitalize;
+  }
+  #root .container-fluid p {
+    font-size: 20px;
+    font-weight: 500;
+  }
+  #root .container-fluid .regLink .h6 {
+    border-radius: 3px;
+    padding: 0 20px;
+    background-color: #0f79af;
+    border: none;
+    padding: 15px 30px;
+  }
+  
