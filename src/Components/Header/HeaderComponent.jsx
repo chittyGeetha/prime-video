@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 
 import './Header.style.css';
-import { Link} from 'react-router-dom'
+import { Link, withRouter} from 'react-router-dom'
 
 class HeaderComponent extends Component {
     constructor(props) {
@@ -42,4 +42,4 @@ class HeaderComponent extends Component {
     }
 }
  
-export default HeaderComponent;
+export default withRouter(HeaderComponent);

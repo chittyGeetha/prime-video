@@ -1,8 +1,9 @@
 import React, { Component, Fragment } from "react";
-import "./Auth.style.css";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { toast } from "react-toastify";
-import firebase from "../../firebase";
+import md5 from "md5";
+import firebase from "../../firebase"; //import firebase
+import "./Auth.style.css";
 class Register extends Component {
   constructor(props) {
     super(props);
@@ -10,6 +11,7 @@ class Register extends Component {
       username: "",
       password: "",
       email: "",
+      phonenumber: "",
       confirm_password: "",
     };
     this.handleChange = this.handleChange.bind(this);
@@ -18,22 +20,49 @@ class Register extends Component {
   handleChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
-
   async handleSubmit(e) {
-    e.preventDefault();
-
     try {
-      let { email, password } = this.state;
+      let { email, password, username, phonenumber } = this.state;
+      e.preventDefault();
       let userData = await firebase
         .auth()
         .createUserWithEmailAndPassword(email, password);
-      toast.success("succesfully prime video account created");
-      console.log(userData);
+      userData.user.sendEmailVerification();
+      let message = `A verification has been sent to ${email} please verify email address `;
+      toast.success(message);
+      this.props.history.push("/login");
+
+      //update profile includes images , phone , id ,
+      await userData.user.updateProfile({
+        displayName: username,
+        photoURL: `https://www.gravatar.com/avatar/${md5(
+          userData.user.email
+        )}?d=identicon`,
+      });
+
+      //firebase storage option
+      firebase
+        .database()
+        .ref()
+        .child("/users" + userData.user.uid)
+        .set({
+          photoURL: userData.user.photoURL,
+          displayName: userData.user.displayName,
+          uid: userData.user.uid,
+          RegistrationDate: new Date().toString(),
+        });
+      this.setState({
+        username: "",
+        password: "",
+        email: "",
+        phonenumber: "",
+        confirm_password: "",
+      });
     } catch (err) {
+      console.log(err);
       toast.error(err.message);
     }
   }
-
   render() {
     return (
       <Fragment>
@@ -98,7 +127,7 @@ class Register extends Component {
                   </button>
                 </div>
                 <hr />
-                <p>
+                <p style={{ fontSize: "12px" }}>
                   By creating an account, you agree to Amazon's Conditions of
                   Use and Privacy Notice.
                 </p>
@@ -114,4 +143,4 @@ class Register extends Component {
   }
 }
 
-export default Register;
+export default withRouter(Register);
