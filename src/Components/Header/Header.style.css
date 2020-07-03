@@ -1,9 +1,26 @@
-#root .bg-light{
-    background-color:#0f171e !important;
-}
-.navbar-brand img{
-    width:120px;
-}
-.nav-link {
+#root .bg-light {
+    background-color: #0f171e !important;
+    padding: 16px 45px;
+    background-image: linear-gradient(180deg, #1b2530 0, rgba(27, 37, 48, 0.85));
+  }
+  
+  .navbar-brand img {
+    width: 120px;
+    margin: 10px;}
+  
+  .nav-link {
     color: #fff;
-}
+    position: relative;
+    cursor: pointer;
+  }
+  .profile-image{
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: inline;
+    position: absolute;
+    top: -10px;
+   left: -4px;
+   padding: 10px;
+  }
+  
